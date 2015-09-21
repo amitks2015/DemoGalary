@@ -39,6 +39,7 @@ public class NewPhotoActivity extends Activity implements
     AddressResultReceiver mResultReceiver;
     private GoogleApiClient mGoogleApiClient;
     Location mLastKnownLocation;
+    public static final String TAG = "NewPhotoActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +66,6 @@ public class NewPhotoActivity extends Activity implements
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Amit", "onResume");
-        //mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
-        //mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
         mGoogleApiClient.connect();
     }
 
@@ -77,36 +75,7 @@ public class NewPhotoActivity extends Activity implements
         if(mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
-        //mLocationManager.removeUpdates(mLocationListener);
     }
-
-    private final LocationListener mLocationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(final Location location) {
-            mLatitude = location.getLatitude();
-            mLongitude = location.getLongitude();
-            Log.d("Amit", " " + mLatitude + " " + mLongitude);
-            mTv.setText(mLatitude + " " + mLongitude);
-            //startIntentService(location);
-            updateButton.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-            Log.d("Amit","status changed"+s);
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-            Log.d("Amit","provider enabled"+s);
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-            Log.d("Amit","provider disabled"+s);
-
-        }
-    };
 
     public void updateClicked(View v) {
         ContentValues cv = new ContentValues();
@@ -138,12 +107,12 @@ public class NewPhotoActivity extends Activity implements
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.d("Amit", "Connected to Google API client");
+        Log.d(TAG, "Connected to Google API client");
         mLastKnownLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         mLatitude = mLastKnownLocation.getLatitude();
         mLongitude = mLastKnownLocation.getLongitude();
-        Log.d("Amit", "long "+mLongitude+ "lat "+ mLatitude);
+        Log.d(TAG, "long "+mLongitude+ "lat "+ mLatitude);
         mTv.setText(mLatitude + " " + mLongitude);
         startIntentService(mLastKnownLocation);
     }
@@ -155,7 +124,7 @@ public class NewPhotoActivity extends Activity implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d("Amit", "Disconnected to Google API client");
+        Log.d(TAG, "Disconnected to Google API client");
         mGoogleApiClient.connect();
     }
 
