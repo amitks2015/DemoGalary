@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DemoGalary</string>
+
+    <string name="empty_text">Please capture some image first!!</string>
+    <string name="action_camera">Camera</string>
+    <string name="title_activity_new_photo">NewPhotoActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_update">UPDATE</string>
+    <string name="update_button">Update</string>
+    <string name="cancel_button">Cancel</string>
+</resources>
